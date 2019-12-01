@@ -1,0 +1,13 @@
+hello
+
+#me
+hi
+
+#bot
+INTENT greetings.hello
+
+#me
+bye
+
+#bot
+INTENT greetings.bye

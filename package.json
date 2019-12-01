@@ -1,0 +1,41 @@
+{
+  "name": "botium-connector-nlpjs",
+  "version": "0.0.1",
+  "description": "Botium Connector for NLP.js",
+  "main": "dist/botium-connector-nlpjs-cjs.js",
+  "module": "dist/botium-connector-nlpjs-es.js",
+  "scripts": {
+    "build": "npm run eslint && rollup -c",
+    "eslint": "eslint index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeforequity-at/botium-connector-nlpjs.git"
+  },
+  "author": "Botium GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codeforequity-at/botium-core/issues"
+  },
+  "homepage": "https://github.com/codeforequity-at/botium-connector-nlpjs#readme",
+  "devDependencies": {
+    "eslint": "^6.7.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "rollup": "^1.27.5",
+    "rollup-plugin-buble": "^0.19.8",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "node-nlp": "4.0.0-rc.4"
+  },
+  "peerDependencies": {
+    "botium-core": "^1.7.3"
+  }
+}
