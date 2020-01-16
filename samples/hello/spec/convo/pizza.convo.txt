@@ -5,5 +5,5 @@ I saw spiderman eating pizza today in the city!
 
 #bot
 INTENT sawhero
-ENTITIES hero|food
-ENTITY_VALUES spiderman|pizza
+ENTITY_CONTENT hero|spiderman
+ENTITY_CONTENT food|pizza
