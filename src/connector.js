@@ -33,7 +33,9 @@ class BotiumConnectorNLPjs {
   async Build () {
     debug('Build called')
 
-    this.manager = new NlpManager()
+    this.manager = new NlpManager({
+      autoSave: false
+    })
     if (this.caps[Capabilities.NLPJS_MODEL_OBJECT]) {
       this.manager.import(this.caps[Capabilities.NLPJS_MODEL_OBJECT])
     } else if (this.caps[Capabilities.NLPJS_MODEL_FILE]) {

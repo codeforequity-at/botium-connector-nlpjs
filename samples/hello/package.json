@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "mocha": "latest",
-    "node-nlp": "4.0.0-rc.4",
+    "node-nlp": "4.0.2",
     "botium-bindings": "latest",
     "botium-connector-nlpjs": "../../"
   }
