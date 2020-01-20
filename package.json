@@ -1,6 +1,6 @@
 {
   "name": "botium-connector-nlpjs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Botium Connector for NLP.js",
   "main": "dist/botium-connector-nlpjs-cjs.js",
   "module": "dist/botium-connector-nlpjs-es.js",
