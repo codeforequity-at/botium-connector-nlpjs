@@ -41,6 +41,6 @@
     "node-nlp": "4.0.2"
   },
   "peerDependencies": {
-    "botium-core": "^1.7.3"
+    "botium-core": "^1.9.10"
   }
 }

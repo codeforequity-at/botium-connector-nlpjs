@@ -3,6 +3,8 @@ const fs = require('fs')
 const { NlpManager } = require('node-nlp')
 const debug = require('debug')('botium-connector-nlpjs')
 
+const { BotiumError, Capabilities: CoreCapabilities } = require('botium-core')
+
 const Capabilities = {
   NLPJS_LANGUAGE: 'NLPJS_LANGUAGE',
   NLPJS_MODEL_OBJECT: 'NLPJS_MODEL_OBJECT',
@@ -24,6 +26,18 @@ class BotiumConnectorNLPjs {
   constructor ({ queueBotSays, caps }) {
     this.queueBotSays = queueBotSays
     this.caps = Object.assign({}, Defaults, caps)
+    if (!this.caps[CoreCapabilities.SECURITY_ALLOW_UNSAFE]) {
+      throw new BotiumError(
+        'Security Error. Using NLPjs Connector is not allowed',
+        {
+          type: 'security',
+          subtype: 'allow unsafe',
+          source: 'botium-connector-nlpjs'
+        }
+      )
+    }
+
+
   }
 
   async Validate () {
