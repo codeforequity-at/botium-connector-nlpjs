@@ -23,7 +23,7 @@ module.exports = {
         return {
           NLPJS_MODEL_FILE: 'Model File or QNA Content required',
           NLPJS_MODEL_QNAFILE: 'Model File or QNA Content required',
-          NLPJS_MODEL_QNACONTENT: 'Model File or QNA Content required',
+          NLPJS_MODEL_QNACONTENT: 'Model File or QNA Content required'
         }
       }
     },
