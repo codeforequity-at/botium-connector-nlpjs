@@ -1,0 +1,9 @@
+{
+  "botium": {
+    "Capabilities": {
+      "PROJECTNAME": "Botium Project NLP.js",
+      "CONTAINERMODE": "nlpjs",
+      "NLPJS_MODEL_QNAFILE": "./qna.tsv"
+    }
+  }
+}

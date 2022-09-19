@@ -1,0 +1,21 @@
+{
+  "name": "hello",
+  "version": "1.0.0",
+  "scripts": {
+    "train": "node train.js",
+    "test": "mocha spec"
+  },
+  "botium": {
+    "convodirs": [
+      "spec/convo"
+    ],
+    "expandConvos": true,
+    "expandUtterancesToConvos": false
+  },
+  "devDependencies": {
+    "mocha": "latest",
+    "node-nlp": "4.0.2",
+    "botium-bindings": "latest",
+    "botium-connector-nlpjs": "../../"
+  }
+}

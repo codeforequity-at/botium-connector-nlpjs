@@ -1,6 +1,6 @@
 const path = require('path')
 const botium = require('botium-core')
-const { NlpManager } = require('node-nlp')
+const { dockStart } = require('@nlpjs/basic')
 const debug = require('debug')('botium-connector-nlpjs-nlp')
 
 const getCaps = (caps) => {
@@ -12,12 +12,13 @@ const getCaps = (caps) => {
 const trainIntentUtterances = async ({ caps }, intents) => {
   const driver = new botium.BotDriver(getCaps(caps))
 
-  const language = driver.capsNLPJS_LANGUAGE || 'en'
-  const manager = new NlpManager({ languages: [language] })
+  const language = driver.caps.NLPJS_LANGUAGE || 'en'
+  const dock = await dockStart({ use: ['Basic', 'Qna'], settings: { nlp: { autoSave: false, languages: [language] } } })
+  const manager = dock.get('nlp')
 
   for (const intent of intents || []) {
     for (const utterance of intent.utterances || []) {
-      manager.addDocument(language, utterance, intent.intentName)
+      await manager.addDocument(language, utterance, intent.intentName)
     }
   }
   await manager.train()
