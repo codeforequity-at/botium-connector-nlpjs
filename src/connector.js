@@ -37,23 +37,33 @@ class BotiumConnectorNLPjs {
   }
 
   async Build () {
-    debug('Build called')
     this.language = this.caps[Capabilities.NLPJS_LANGUAGE]
 
     this.dock = await dockStart({ use: ['Basic', 'Qna'], settings: { nlp: { autoSave: false, languages: [this.language] } } })
     this.manager = this.dock.get('nlp')
 
     if (this.caps[Capabilities.NLPJS_MODEL_CONTENT]) {
-      this.manager.import(this.caps[Capabilities.NLPJS_MODEL_CONTENT])
+      debug('Loading model from capability')
+      try {
+        this.manager.import(this.caps[Capabilities.NLPJS_MODEL_CONTENT])
+      } catch (err) {
+        throw new Error(`Failed loading model: ${err.message}`)
+      }
     } else if (this.caps[Capabilities.NLPJS_MODEL_FILE]) {
       try {
-        const data = fs.readFileSync(this.caps[Capabilities.NLPJS_MODEL_FILE], 'utf8')
-        this.manager.import(data)
+        if (fs.existsSync(this.caps[Capabilities.NLPJS_MODEL_FILE])) {
+          debug(`Loading model file from ${this.caps[Capabilities.NLPJS_MODEL_FILE]}`)
+          const data = fs.readFileSync(this.caps[Capabilities.NLPJS_MODEL_FILE], 'utf8')
+          this.manager.import(data)
+        } else {
+          debug(`Not loading model file from ${this.caps[Capabilities.NLPJS_MODEL_FILE]}: file not exists`)
+        }
       } catch (err) {
         throw new Error(`Failed loading model file from ${this.caps[Capabilities.NLPJS_MODEL_FILE]}: ${err.message}`)
       }
     }
     if (this.caps[Capabilities.NLPJS_MODEL_QNACONTENT]) {
+      debug('Loading QNA content from capability')
       try {
         await this.manager.addCorpus({
           content: this.caps[Capabilities.NLPJS_MODEL_QNACONTENT],
@@ -67,6 +77,7 @@ class BotiumConnectorNLPjs {
       }
     }
     if (this.caps[Capabilities.NLPJS_MODEL_QNAFILE]) {
+      debug(`Loading QNA file from ${this.caps[Capabilities.NLPJS_MODEL_QNAFILE]}`)
       try {
         await this.manager.addCorpus({
           filename: this.caps[Capabilities.NLPJS_MODEL_QNAFILE],
