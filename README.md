@@ -67,8 +67,19 @@ _Default: en_
 
 Language code of your model and your test cases
 
-### NLPJS_MODEL_OBJECT
+### NLPJS_MODEL_CONTENT
 Precompiled exported NLP.js model
 
 ### NLPJS_MODEL_FILE
 Filename to load the NLP.js model from
+
+### NLPJS_MODEL_QNAFILE
+QNA File to import
+
+### NLPJS_MODEL_QNACONTENT
+QNA Content to import
+
+### NLPJS_MODEL_QNASEPARATOR
+_Default: \t_
+
+QNA content separator

@@ -28,7 +28,7 @@ const trainIntentUtterances = async ({ caps }, intents) => {
 
   return {
     caps: Object.assign({}, getCaps(caps), {
-      NLPJS_MODEL_OBJECT: nlpModel
+      NLPJS_MODEL_CONTENT: nlpModel
     }),
     tempManager: manager
   }

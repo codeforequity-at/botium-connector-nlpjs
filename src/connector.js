@@ -6,7 +6,7 @@ const debug = require('debug')('botium-connector-nlpjs')
 
 const Capabilities = {
   NLPJS_LANGUAGE: 'NLPJS_LANGUAGE',
-  NLPJS_MODEL_OBJECT: 'NLPJS_MODEL_OBJECT',
+  NLPJS_MODEL_CONTENT: 'NLPJS_MODEL_CONTENT',
   NLPJS_MODEL_FILE: 'NLPJS_MODEL_FILE',
   NLPJS_MODEL_QNAFILE: 'NLPJS_MODEL_QNAFILE',
   NLPJS_MODEL_QNACONTENT: 'NLPJS_MODEL_QNACONTENT',
@@ -33,7 +33,7 @@ class BotiumConnectorNLPjs {
   }
 
   async Validate () {
-    if (!this.caps[Capabilities.NLPJS_MODEL_OBJECT] && !this.caps[Capabilities.NLPJS_MODEL_FILE] && !this.caps[Capabilities.NLPJS_MODEL_QNAFILE] && !this.caps[Capabilities.NLPJS_MODEL_QNACONTENT]) throw new Error('NLPJS_MODEL_OBJECT or NLPJS_MODEL_FILE or or NLPJS_MODEL_QNAFILE or NLPJS_MODEL_QNACONTENT capability required')
+    if (this.caps[Capabilities.NLPJS_MODEL_CONTENT] && this.caps[Capabilities.NLPJS_MODEL_FILE]) throw new Error('Either NLPJS_MODEL_CONTENT or NLPJS_MODEL_FILE capability can be given')
   }
 
   async Build () {
@@ -43,8 +43,8 @@ class BotiumConnectorNLPjs {
     this.dock = await dockStart({ use: ['Basic', 'Qna'], settings: { nlp: { autoSave: false, languages: [this.language] } } })
     this.manager = this.dock.get('nlp')
 
-    if (this.caps[Capabilities.NLPJS_MODEL_OBJECT]) {
-      this.manager.import(this.caps[Capabilities.NLPJS_MODEL_OBJECT])
+    if (this.caps[Capabilities.NLPJS_MODEL_CONTENT]) {
+      this.manager.import(this.caps[Capabilities.NLPJS_MODEL_CONTENT])
     } else if (this.caps[Capabilities.NLPJS_MODEL_FILE]) {
       try {
         const data = fs.readFileSync(this.caps[Capabilities.NLPJS_MODEL_FILE], 'utf8')
@@ -52,7 +52,8 @@ class BotiumConnectorNLPjs {
       } catch (err) {
         throw new Error(`Failed loading model file from ${this.caps[Capabilities.NLPJS_MODEL_FILE]}: ${err.message}`)
       }
-    } else if (this.caps[Capabilities.NLPJS_MODEL_QNACONTENT]) {
+    }
+    if (this.caps[Capabilities.NLPJS_MODEL_QNACONTENT]) {
       try {
         await this.manager.addCorpus({
           content: this.caps[Capabilities.NLPJS_MODEL_QNACONTENT],
@@ -64,7 +65,8 @@ class BotiumConnectorNLPjs {
       } catch (err) {
         throw new Error(`Failed loading QNA content: ${err.message}`)
       }
-    } else if (this.caps[Capabilities.NLPJS_MODEL_QNAFILE]) {
+    }
+    if (this.caps[Capabilities.NLPJS_MODEL_QNAFILE]) {
       try {
         await this.manager.addCorpus({
           filename: this.caps[Capabilities.NLPJS_MODEL_QNAFILE],

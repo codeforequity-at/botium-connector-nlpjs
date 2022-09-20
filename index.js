@@ -1,16 +1,25 @@
 const BotiumConnectorNLPjs = require('./src/connector')
 const { extractIntentUtterances, trainIntentUtterances, cleanupIntentUtterances } = require('./src/nlp')
+const { importHandler, importArgs, exportHandler, exportArgs } = require('./src/intents')
 
 module.exports = {
   PluginVersion: 1,
   PluginClass: BotiumConnectorNLPjs,
+  Import: {
+    Handler: importHandler,
+    Args: importArgs
+  },
+  Export: {
+    Handler: exportHandler,
+    Args: exportArgs
+  },
   NLP: {
     ExtractIntentUtterances: extractIntentUtterances,
     TrainIntentUtterances: trainIntentUtterances,
     CleanupIntentUtterances: cleanupIntentUtterances
   },
   PluginDesc: {
-    name: 'NLP.js',
+    name: 'NLP.js (In-Memory NLP)',
     provider: 'AXA Group',
     features: {
       intentResolution: true,
@@ -19,11 +28,10 @@ module.exports = {
       entityResolution: true
     },
     validate: async (caps) => {
-      if (!caps.NLPJS_MODEL_FILE && !caps.NLPJS_MODEL_QNAFILE && !caps.NLPJS_MODEL_QNACONTENT) {
+      if (caps.NLPJS_MODEL_CONTENT && caps.NLPJS_MODEL_FILE) {
         return {
-          NLPJS_MODEL_FILE: 'Model File or QNA Content required',
-          NLPJS_MODEL_QNAFILE: 'Model File or QNA Content required',
-          NLPJS_MODEL_QNACONTENT: 'Model File or QNA Content required'
+          NLPJS_MODEL_CONTENT: 'Either model content or file can be given',
+          NLPJS_MODEL_FILE: 'Either model content or file can be given'
         }
       }
     },
@@ -34,6 +42,12 @@ module.exports = {
         type: 'string',
         helperText: '2-letter locale code (see <a href="https://github.com/axa-group/nlp.js/blob/master/docs/v4/language-support.md#supported-languages">supported languages</a>)',
         required: true
+      },
+      {
+        name: 'NLPJS_MODEL_CONTENT',
+        label: 'Model Content',
+        type: 'json',
+        helperText: 'Model content'
       },
       {
         name: 'NLPJS_MODEL_FILE',

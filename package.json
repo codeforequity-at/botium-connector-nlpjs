@@ -6,7 +6,7 @@
   "module": "dist/botium-connector-nlpjs-es.js",
   "scripts": {
     "build": "npm run eslint && rollup -c",
-    "eslint": "eslint index.js"
+    "eslint": "eslint index.js src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -40,6 +40,7 @@
     "@nlpjs/basic": "^4.23.5",
     "@nlpjs/qna-importer": "^4.22.7",
     "debug": "^4.3.4",
+    "lodash": "^4.17.21",
     "node-nlp": "^4.24.0"
   },
   "peerDependencies": {
